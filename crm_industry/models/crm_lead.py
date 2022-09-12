@@ -41,3 +41,11 @@ class CrmLead(models.Model):
             }
         )
         return values
+
+    @api.onchange("partner_id")
+    def _onchange_partner_id(self):
+        if self.partner_id:
+            if self.partner_id.industry_id:
+                self.industry_id = self.partner_id.industry_id
+            if self.partner_id.secondary_industry_ids:
+                self.secondary_industry_ids = self.partner_id.secondary_industry_ids
